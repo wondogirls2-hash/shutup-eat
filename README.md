@@ -51,7 +51,13 @@ EXPO_PUBLIC_KAKAO_API_KEY=발급받은_REST_API_키
 
 ### 음식 이미지
 
-`src/data/foods.ts`의 `imageUrl`은 데모용으로 [LoremFlickr](https://loremflickr.com) 키워드 이미지를 사용합니다. 실제 서비스에서는 직접 촬영/구매한 이미지 URL(자체 CDN, Firebase Storage, S3 등)로 교체하세요.
+`src/data/foods.ts`의 `imageUrl`은 데모용으로 [LoremFlickr](https://loremflickr.com) 키워드 이미지를 사용합니다. 실제 사진이 준비되면 자동으로 그쪽을 우선 사용하도록 로컬 이미지 레이어(`src/data/localImages.ts`)가 연결되어 있습니다.
+
+실제 사진 추가하는 법:
+
+1. `assets/foods/{음식id}.jpg` 형식으로 사진 파일을 넣는다 (id는 `src/data/foods.ts`의 각 항목 `id` 값과 동일해야 함, 예: `assets/foods/sundae.jpg`)
+2. `src/data/localImages.ts`에 `{음식id}: require('../../assets/foods/{음식id}.jpg'),` 한 줄 추가
+3. 등록 안 된 음식은 자동으로 임시 이미지(LoremFlickr)로 대체되니, 준비되는 대로 하나씩 추가하면 됨
 
 ## 톤 & 무드 가이드
 

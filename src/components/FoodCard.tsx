@@ -4,15 +4,18 @@ import { FoodItem } from '../types/food';
 import { colors } from '../theme/colors';
 import { typography } from '../theme/typography';
 import { hardShadow, radius, spacing, thickBorder } from '../theme/layout';
+import { LOCAL_FOOD_IMAGES } from '../data/localImages';
 
 interface FoodCardProps {
   food: FoodItem;
 }
 
 export function FoodCard({ food }: FoodCardProps) {
+  const imageSource = LOCAL_FOOD_IMAGES[food.id] ?? { uri: food.imageUrl };
+
   return (
     <View style={[styles.card, thickBorder, hardShadow]}>
-      <Image source={{ uri: food.imageUrl }} style={styles.image} />
+      <Image source={imageSource} style={styles.image} />
       <View style={styles.badge}>
         <Text style={[typography.caption, styles.badgeText]}>{food.category}</Text>
       </View>
