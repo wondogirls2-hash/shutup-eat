@@ -8,9 +8,35 @@ import { LOCAL_FOOD_IMAGES } from '../data/localImages';
 
 interface FoodCardProps {
   food: FoodItem;
+  eatCount: number;
 }
 
-export function FoodCard({ food }: FoodCardProps) {
+const MAX_VISIBLE_STARS = 5;
+
+function StarCount({ count }: { count: number }) {
+  if (count <= 0) {
+    return (
+      <View style={styles.starRow}>
+        <Text style={[typography.caption, styles.starEmpty]}>☆ 처음 만나는 메뉴</Text>
+      </View>
+    );
+  }
+
+  const filled = Math.min(count, MAX_VISIBLE_STARS);
+  const extra = count - filled;
+
+  return (
+    <View style={styles.starRow}>
+      <Text style={styles.starText}>{'★'.repeat(filled)}</Text>
+      <Text style={[typography.caption, styles.starLabel]}>
+        {extra > 0 ? ` +${extra} ` : ' '}
+        {count}번째 먹는 거다
+      </Text>
+    </View>
+  );
+}
+
+export function FoodCard({ food, eatCount }: FoodCardProps) {
   const imageSource = LOCAL_FOOD_IMAGES[food.id] ?? { uri: food.imageUrl };
 
   return (
@@ -23,6 +49,7 @@ export function FoodCard({ food }: FoodCardProps) {
         <Text style={[typography.hero, styles.name]} numberOfLines={1}>
           {food.name}
         </Text>
+        <StarCount count={eatCount} />
         <Text style={[typography.body, styles.roast]}>"{food.roast}"</Text>
         <View style={styles.tagRow}>
           {food.tags.map((tag) => (
@@ -68,6 +95,22 @@ const styles = StyleSheet.create({
   name: {
     color: colors.textPrimary,
     marginBottom: spacing.xs,
+  },
+  starRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.sm,
+  },
+  starText: {
+    color: colors.accent,
+    fontSize: 16,
+    letterSpacing: 2,
+  },
+  starLabel: {
+    color: colors.textSecondary,
+  },
+  starEmpty: {
+    color: colors.textSecondary,
   },
   roast: {
     color: colors.accent,

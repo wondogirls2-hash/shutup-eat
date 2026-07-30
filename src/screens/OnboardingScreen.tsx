@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { colors } from '../theme/colors';
 import { typography } from '../theme/typography';
@@ -83,7 +84,7 @@ export function OnboardingScreen({ navigation }: Props) {
   const copy = STEP_COPY[step];
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
       <View style={styles.progressRow}>
         {[0, 1, 2].map((i) => (
           <View

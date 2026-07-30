@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { colors } from '../theme/colors';
 import { typography } from '../theme/typography';
@@ -7,9 +8,16 @@ import { spacing } from '../theme/layout';
 import { BigButton } from '../components/BigButton';
 import { FoodCard } from '../components/FoodCard';
 import { RestaurantList } from '../components/RestaurantList';
+import { DecisionButtons } from '../components/DecisionButtons';
 import { FoodItem, Restaurant } from '../types/food';
 import { emptyPreferences, UserPreferences } from '../types/survey';
-import { loadPreferences, resetPreferences } from '../services/storage';
+import {
+  EatCounts,
+  incrementEatCount,
+  loadEatCounts,
+  loadPreferences,
+  resetPreferences,
+} from '../services/storage';
 import { pickRandomFood } from '../services/recommend';
 import { getCurrentCoordinates } from '../services/location';
 import { searchNearbyRestaurants } from '../services/kakaoLocal';
@@ -28,9 +36,11 @@ export function MainScreen({ navigation }: Props) {
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
   const [loadingRestaurants, setLoadingRestaurants] = useState(false);
   const [restaurantError, setRestaurantError] = useState<string | undefined>(undefined);
+  const [eatCounts, setEatCounts] = useState<EatCounts>({});
 
   useEffect(() => {
     loadPreferences().then(setPrefs);
+    loadEatCounts().then(setEatCounts);
   }, []);
 
   const fetchRestaurantsFor = async (food: FoodItem) => {
@@ -49,10 +59,25 @@ export function MainScreen({ navigation }: Props) {
     }
   };
 
+  // 뽑기/다시뽑기는 그냥 후보를 보여주는 것뿐, 실제로 먹기로 확정한 게 아니라서
+  // 여기서는 절대 취식 횟수를 올리지 않는다.
   const handlePick = () => {
     const food = pickRandomFood(prefs, currentFood?.id);
     setCurrentFood(food);
     fetchRestaurantsFor(food);
+  };
+
+  const handleEat = async () => {
+    if (!currentFood) return;
+    const next = await incrementEatCount(currentFood.id);
+    setEatCounts(next);
+    setCurrentFood(null);
+    setRestaurants([]);
+  };
+
+  const handleSkip = () => {
+    setCurrentFood(null);
+    setRestaurants([]);
   };
 
   const handleResetPreferences = async () => {
@@ -61,7 +86,7 @@ export function MainScreen({ navigation }: Props) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right', 'bottom']}>
       <View style={styles.header}>
         <Text style={[typography.title, styles.headerTitle]}>닥치고{'\n'}이거먹어</Text>
         {currentFood && (
@@ -83,7 +108,8 @@ export function MainScreen({ navigation }: Props) {
           contentContainerStyle={styles.resultScroll}
           showsVerticalScrollIndicator={false}
         >
-          <FoodCard food={currentFood} />
+          <FoodCard food={currentFood} eatCount={eatCounts[currentFood.id] ?? 0} />
+          <DecisionButtons onEat={handleEat} onSkip={handleSkip} />
           <RestaurantList
             restaurants={restaurants}
             loading={loadingRestaurants}
