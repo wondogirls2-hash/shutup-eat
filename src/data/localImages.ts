@@ -12,6 +12,7 @@
  */
 export const LOCAL_FOOD_IMAGES: Record<string, ReturnType<typeof require>> = {
   'banh-mi': require('../../assets/foods/banh-mi.jpg'),
+  'bossam': require('../../assets/foods/bossam.jpg'),
   'bujimgae': require('../../assets/foods/bujimgae.jpg'),
   'bulgogi': require('../../assets/foods/bulgogi.jpg'),
   'bun-cha': require('../../assets/foods/bun-cha.jpg'),
@@ -25,8 +26,10 @@ export const LOCAL_FOOD_IMAGES: Record<string, ReturnType<typeof require>> = {
   'eggs-benedict': require('../../assets/foods/eggs-benedict.jpg'),
   'galbijjim': require('../../assets/foods/galbijjim.jpg'),
   'galbitang': require('../../assets/foods/galbitang.jpg'),
+  'fried-chicken': require('../../assets/foods/fried-chicken.jpg'),
   'gamjatang': require('../../assets/foods/kamjatang.jpg'),
   'gochujapchae': require('../../assets/foods/gochujapchae.jpg'),
+  'golbangi': require('../../assets/foods/golbangi.jpg'),
   'gratin': require('../../assets/foods/gratin.jpg'),
   'gukbab': require('../../assets/foods/gukbab.jpg'),
   'gyudon': require('../../assets/foods/gyudon.jpg'),
@@ -37,6 +40,7 @@ export const LOCAL_FOOD_IMAGES: Record<string, ReturnType<typeof require>> = {
   'jjamppong': require('../../assets/foods/jjamppong.jpg'),
   'jjolmyeon': require('../../assets/foods/jjolmyeon.jpg'),
   'jjuggumi': require('../../assets/foods/jjuggumi.jpg'),
+  'jokbal': require('../../assets/foods/jokbal.jpg'),
   'kalnoodle': require('../../assets/foods/kalnoodle.jpg'),
   'katsudon': require('../../assets/foods/katsudon.jpg'),
   'kimbap': require('../../assets/foods/kimbap.jpg'),
@@ -81,6 +85,7 @@ export const LOCAL_FOOD_IMAGES: Record<string, ReturnType<typeof require>> = {
   'wontonmyeon': require('../../assets/foods/wontonmyeon.jpg'),
   'yakitori': require('../../assets/foods/yakitori.jpg'),
   'yangjangpi': require('../../assets/foods/yangjangpi.jpg'),
+  'yangnyum-chicken': require('../../assets/foods/yangnyum-chicken.jpg'),
   'yukgaejang': require('../../assets/foods/ukgaejang.jpg'),
   'yurinki': require('../../assets/foods/yurinki.jpg'),
 };
