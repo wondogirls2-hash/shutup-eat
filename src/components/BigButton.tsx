@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { Animated, Pressable, StyleSheet, Text, ViewStyle } from 'react-native';
 import { colors } from '../theme/colors';
 import { typography } from '../theme/typography';
+import { triggerLightHaptic } from '../utils/haptics';
 
 interface BigButtonProps {
   label: string;
@@ -54,7 +55,10 @@ export function BigButton({
       >
         <Pressable
           disabled={disabled}
-          onPressIn={() => animateTo(PRESS_OFFSET, 0.97)}
+          onPressIn={() => {
+            triggerLightHaptic();
+            animateTo(PRESS_OFFSET, 0.97);
+          }}
           onPressOut={() => animateTo(0, 1)}
           onPress={onPress}
           style={[

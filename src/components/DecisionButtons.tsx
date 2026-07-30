@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { colors } from '../theme/colors';
 import { typography } from '../theme/typography';
 import { radius, spacing, thickBorder } from '../theme/layout';
+import { triggerLightHaptic } from '../utils/haptics';
 
 interface DecisionButtonsProps {
   onEat: () => void;
@@ -14,12 +15,14 @@ export function DecisionButtons({ onEat, onSkip }: DecisionButtonsProps) {
     <View style={styles.row}>
       <Pressable
         style={[styles.button, thickBorder, { backgroundColor: colors.success }]}
+        onPressIn={triggerLightHaptic}
         onPress={onEat}
       >
         <Text style={[typography.button, styles.buttonText]}>⭕ 처먹는다</Text>
       </Pressable>
       <Pressable
         style={[styles.button, thickBorder, { backgroundColor: colors.danger }]}
+        onPressIn={triggerLightHaptic}
         onPress={onSkip}
       >
         <Text style={[typography.button, styles.buttonText]}>❌ 안 먹어</Text>

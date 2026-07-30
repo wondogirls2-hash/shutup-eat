@@ -3,6 +3,7 @@ import { Pressable, StyleSheet, Text } from 'react-native';
 import { colors } from '../theme/colors';
 import { typography } from '../theme/typography';
 import { radius } from '../theme/layout';
+import { triggerLightHaptic } from '../utils/haptics';
 
 interface SurveyChipProps {
   label: string;
@@ -13,6 +14,7 @@ interface SurveyChipProps {
 export function SurveyChip({ label, selected, onPress }: SurveyChipProps) {
   return (
     <Pressable
+      onPressIn={triggerLightHaptic}
       onPress={onPress}
       style={[
         styles.chip,

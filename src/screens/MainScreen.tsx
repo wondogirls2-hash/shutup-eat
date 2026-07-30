@@ -22,6 +22,7 @@ import { pickRandomFood } from '../services/recommend';
 import { getCurrentCoordinates } from '../services/location';
 import { searchNearbyRestaurants } from '../services/kakaoLocal';
 import { RootStackParamList } from '../navigation/types';
+import { triggerLightHaptic } from '../utils/haptics';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Main'>;
 
@@ -90,7 +91,7 @@ export function MainScreen({ navigation }: Props) {
       <View style={styles.header}>
         <Text style={[typography.title, styles.headerTitle]}>닥치고{'\n'}이거먹어</Text>
         {currentFood && (
-          <Pressable style={styles.rerollButton} onPress={handlePick}>
+          <Pressable style={styles.rerollButton} onPressIn={triggerLightHaptic} onPress={handlePick}>
             <Text style={[typography.button, styles.rerollText]}>다시뽑기</Text>
           </Pressable>
         )}
@@ -118,7 +119,7 @@ export function MainScreen({ navigation }: Props) {
         </ScrollView>
       )}
 
-      <Pressable style={styles.resetLink} onPress={handleResetPreferences}>
+      <Pressable style={styles.resetLink} onPressIn={triggerLightHaptic} onPress={handleResetPreferences}>
         <Text style={[typography.caption, styles.resetLinkText]}>취향 다시 설정하기</Text>
       </Pressable>
     </SafeAreaView>

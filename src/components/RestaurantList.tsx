@@ -4,6 +4,7 @@ import { Restaurant } from '../types/food';
 import { colors } from '../theme/colors';
 import { typography } from '../theme/typography';
 import { radius, spacing, thickBorder } from '../theme/layout';
+import { triggerLightHaptic } from '../utils/haptics';
 
 interface RestaurantListProps {
   restaurants: Restaurant[];
@@ -52,6 +53,7 @@ export function RestaurantList({ restaurants, loading, errorMessage }: Restauran
         <Pressable
           key={r.id}
           style={[styles.item, thickBorder]}
+          onPressIn={triggerLightHaptic}
           onPress={() => r.placeUrl && Linking.openURL(r.placeUrl)}
         >
           <View style={styles.itemHeader}>
