@@ -1,0 +1,88 @@
+import React from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+import { FoodItem } from '../types/food';
+import { colors } from '../theme/colors';
+import { typography } from '../theme/typography';
+import { hardShadow, radius, spacing, thickBorder } from '../theme/layout';
+
+interface FoodCardProps {
+  food: FoodItem;
+}
+
+export function FoodCard({ food }: FoodCardProps) {
+  return (
+    <View style={[styles.card, thickBorder, hardShadow]}>
+      <Image source={{ uri: food.imageUrl }} style={styles.image} />
+      <View style={styles.badge}>
+        <Text style={[typography.caption, styles.badgeText]}>{food.category}</Text>
+      </View>
+      <View style={styles.body}>
+        <Text style={[typography.hero, styles.name]} numberOfLines={1}>
+          {food.name}
+        </Text>
+        <Text style={[typography.body, styles.roast]}>"{food.roast}"</Text>
+        <View style={styles.tagRow}>
+          {food.tags.map((tag) => (
+            <View key={tag} style={styles.tag}>
+              <Text style={[typography.caption, styles.tagText]}>#{tag}</Text>
+            </View>
+          ))}
+        </View>
+      </View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  card: {
+    backgroundColor: colors.surface,
+    borderRadius: radius.lg,
+    overflow: 'hidden',
+    width: '100%',
+  },
+  image: {
+    width: '100%',
+    height: 200,
+    backgroundColor: colors.surfaceAlt,
+  },
+  badge: {
+    position: 'absolute',
+    top: spacing.md,
+    left: spacing.md,
+    backgroundColor: colors.accent,
+    borderWidth: 2,
+    borderColor: colors.border,
+    borderRadius: radius.pill,
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+  },
+  badgeText: {
+    color: colors.textOnAccent,
+  },
+  body: {
+    padding: spacing.md,
+  },
+  name: {
+    color: colors.textPrimary,
+    marginBottom: spacing.xs,
+  },
+  roast: {
+    color: colors.accent,
+    marginBottom: spacing.sm,
+  },
+  tagRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  tag: {
+    backgroundColor: colors.surfaceAlt,
+    borderRadius: radius.sm,
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+    marginRight: 6,
+    marginBottom: 6,
+  },
+  tagText: {
+    color: colors.textSecondary,
+  },
+});
