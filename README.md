@@ -59,6 +59,8 @@ EXPO_PUBLIC_KAKAO_API_KEY=발급받은_REST_API_키
 2. `src/data/localImages.ts`에 `{음식id}: require('../../assets/foods/{음식id}.jpg'),` 한 줄 추가
 3. 등록 안 된 음식은 자동으로 임시 이미지(LoremFlickr)로 대체되니, 준비되는 대로 하나씩 추가하면 됨
 
+사진을 넣은 뒤에는 `npm run compress-images`로 용량을 줄이는 걸 추천합니다 (가장 긴 변 1200px 제한 + JPEG 품질 78로 재인코딩, `.png`로 넣어도 자동으로 `.jpg`로 통일됨). 확장자가 바뀌면 `localImages.ts`의 `require` 경로도 맞춰서 수정해야 합니다.
+
 ## 톤 & 무드 가이드
 
 - 컬러: 어두운 배경(`#121212`) + 강렬한 레드(`#FF3B30`) + 옐로우 포인트(`#FFD400`)
